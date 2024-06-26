@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenings</title>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 40px;
+        }
+
+        .go-back {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .go-back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Manage Screenings</h1>
+        
+        <!-- Form to add a new screening -->
+        <form action="/add_screening" method="post">
+            <div class="form-group">
+                <input type="number" class="form-control" name="movie_id" placeholder="Movie ID" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="screen_id" placeholder="Screen ID" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="screening_type" placeholder="Screening Type" required>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" name="screening_time" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Screening</button>
+        </form>
+        
+        <!-- Existing screenings table -->
+        <h2>Existing Screenings</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Movie ID</th>
+                        <th>Screen ID</th>
+                        <th>Screening Type</th>
+                        <th>Screening Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for screening in screenings %}
+                    <tr>
+                        <td>{{ screening[1] }}</td>
+                        <td>{{ screening[2] }}</td>
+                        <td>{{ screening[3] }}</td>
+                        <td>{{ screening[4] }}</td>
+                        <td>
+                             <a href="/delete_screening/{{ screening[0] }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this screening?')">Delete</a>
+                            <a href="/update_screening/{{ screening[0] }}" class="btn btn-sm btn-primary">Update</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Go back link -->
+        <a href="/" class="go-back">Go Back</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
